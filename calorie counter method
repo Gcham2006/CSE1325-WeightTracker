@@ -1,0 +1,242 @@
+import java.util.Scanner;
+import java.io.*;
+import java.util.ArrayList;
+
+class person{
+	private String name;
+	private int age;
+	private char gender;
+	private int height;
+	private double weight;
+	
+	public person(String name,int age,char gender,int height,double weight) {
+		this.name = name;
+		this.age = age;
+		this.gender = gender;
+		this.height = height;
+		this.weight = weight;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public char getGender() {
+		return gender;
+	}
+	public int getHeight() {
+		return height;
+	}
+	public double getWeight() {
+		return weight;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public void setGender(char gender) {
+		this.gender = gender;
+	}
+	public void setHeight(int height) {
+		this.height = height;
+	}
+	public void setWeight(double weight) {
+		this.weight = weight;
+	}
+	
+	
+	
+	
+	public void displayInfo() {
+		System.out.println("Name: "+name+"\nAge: "+age+"\nGender: "+gender+"\nHeight(cm): "+height+"\nWeight(kg): "+weight);
+	}
+}
+
+class member extends person{
+	private String ID;
+	
+	public member(String name,int age,char gender,int height,double weight,String ID) {
+		super(name,age,gender,height,weight);
+		this.ID = ID;
+	}
+	
+	public String getID() {
+		return ID;
+	}
+	
+	public void setID(String ID) {
+		this.ID = ID;
+	}
+	
+	@Override
+	public void displayInfo() {
+		System.out.println("Name: "+getName()+"\nAge: "+getAge()+"\nGender: "+getGender()+"\nHeight(cm): "+getHeight()+"\nWeight(Kg): "+getWeight()+"\nID:"+ID);
+	}
+}
+
+ enum activityLevel {
+	 	SEDENTARY(1.2),
+	    LIGHTLY_ACTIVE(1.375),
+	    MODERATELY_ACTIVE(1.55),
+	    VERY_ACTIVE(1.725),
+	    EXTRA_ACTIVE(1.9);
+
+	    private final double factor;
+
+	    private activityLevel(double factor) {
+	        this.factor = factor;
+	    }
+
+	    public double getFactor() {
+	        return factor;
+	    }
+}
+ 
+
+
+ enum Goal {
+	    MAINTAIN(0),
+	    LOSE(-400),
+	    GAIN(400);
+
+	    private final int calorie;
+
+	    private Goal(int calorie) {
+	        this.calorie = calorie;
+	    }
+
+	    public int getCalorie() {
+	        return calorie;
+	    }
+	} 
+
+
+
+
+class features{
+	
+	
+	public void menu(Scanner sc) {
+		int choice;
+		System.out.println("\t\tWelcome!");
+		
+		System.out.println("1. Create a profile");
+		System.out.println("2. Remove a profile");
+		System.out.println("3. Track your weight");
+		System.out.println("4. Calculate your BMI");
+		System.out.println("5. Calculate your daily recommended calorie intake");
+		System.out.println("6. Calculate your macros");
+		System.out.println("7. Exit");
+		
+	}
+	
+	public void createProfile(Scanner sc) {
+		String name;
+		int age;
+		String gender;
+		int height;
+		String id;
+		
+		System.out.print("Enter name: ");
+		name = sc.nextLine();
+		System.out.print("Enter age: ");
+		age = sc.nextInt();
+		sc.nextLine();
+		System.out.print("Male/Female: ");
+		gender = sc.next();
+		
+		
+	}
+	
+	
+	public void calculateCalories(ArrayList<person> members,Scanner sc) {
+		double calories=0;
+		
+		String id;
+		System.out.print("Enter ID of member to calculate BMR of: ");
+		id = sc.next();
+		
+		for(int i=0;i<members.size();i++) {
+			if(((member)members.get(i)).getID().equals(id)) {
+				
+				if(members.get(i).getGender()=='M') {
+					calories = (members.get(i).getWeight()*10)+(members.get(i).getHeight()*6.25)-(members.get(i).getAge()*5)+5;
+				}
+				else {
+					calories = (members.get(i).getWeight()*10)+(members.get(i).getHeight()*6.25)-(members.get(i).getAge()*5)-161;
+				}		
+				
+			}
+		}
+		System.out.print("Choose activity level for member:\n1.SEDENTARY\n2.LIGHTLY_ACTIVE\n3.MODERATELY_ACTIVE\n4.VERY_ACTIVE\n5.EXTRA_ACTIVE\nChoice:");
+		int choice = sc.nextInt();
+		activityLevel activity = activityLevel.SEDENTARY;
+		switch(choice) {
+		case 1:
+			activity = activityLevel.SEDENTARY;
+			break;
+		case 2:
+			activity = activityLevel.LIGHTLY_ACTIVE;
+			break;	
+		case 3:
+			activity = activityLevel.MODERATELY_ACTIVE;
+			break;
+		case 4:
+			activity = activityLevel.VERY_ACTIVE;
+			break;
+		case 5:
+			activity = activityLevel.EXTRA_ACTIVE;
+			break;	
+			
+		}
+		
+		System.out.print("Choose goal for member:\n1.MAINTAIN\n2.LOSE\n3.GAIN\nChoice:");
+		int choice2 = sc.nextInt();
+		Goal goal = Goal.MAINTAIN;
+		switch(choice2) {
+		case 1:
+			goal = Goal.MAINTAIN;
+			break;
+		case 2:
+			goal = Goal.LOSE;
+			break;	
+		case 3:
+			goal = Goal.GAIN;
+			break;
+			
+		}
+		
+		calories = calories*activity.getFactor();
+		
+		calories = calories + goal.getCalorie();
+		
+		System.out.println("The members recommended daily calorie intake is "+calories+" calories");
+		
+	}
+}
+
+
+
+
+public class Project {
+
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		
+		ArrayList<person> members = new ArrayList<>();
+		
+		
+		
+		
+		
+		
+		
+		
+	}
+
+}
