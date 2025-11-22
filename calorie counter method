@@ -116,127 +116,160 @@ class member extends person{
 	} 
 
 
+public class calorie_counter {
+    // list to store the profiles created in the app
+    private ArrayList<person> members = new ArrayList<>();
 
+    public void menu(Scanner sc) {
+        while (true) {
+            System.out.println("\n\t\t--- Calorie Counter Menu ---");
+            System.out.println("1. Create a profile");
+            System.out.println("2. Remove a profile");
+            System.out.println("3. Track your weight (Placeholder)");
+            System.out.println("4. Calculate your BMI (Placeholder)");
+            System.out.println("5. Calculate daily calories");
+            System.out.println("6. Calculate your macros (Placeholder)");
+            System.out.println("7. Logout");
+            System.out.print("Enter choice: ");
 
-class features{
-	
-	
-	public void menu(Scanner sc) {
-		int choice;
-		System.out.println("\t\tWelcome!");
-		
-		System.out.println("1. Create a profile");
-		System.out.println("2. Remove a profile");
-		System.out.println("3. Track your weight");
-		System.out.println("4. Calculate your BMI");
-		System.out.println("5. Calculate your daily recommended calorie intake");
-		System.out.println("6. Calculate your macros");
-		System.out.println("7. Exit");
-		
-	}
-	
-	public void createProfile(Scanner sc) {
-		String name;
-		int age;
-		String gender;
-		int height;
-		String id;
-		
-		System.out.print("Enter name: ");
-		name = sc.nextLine();
-		System.out.print("Enter age: ");
-		age = sc.nextInt();
-		sc.nextLine();
-		System.out.print("Male/Female: ");
-		gender = sc.next();
-		
-		
-	}
-	
-	
-	public void calculateCalories(ArrayList<person> members,Scanner sc) {
-		double calories=0;
-		
-		String id;
-		System.out.print("Enter ID of member to calculate BMR of: ");
-		id = sc.next();
-		
-		for(int i=0;i<members.size();i++) {
-			if(((member)members.get(i)).getID().equals(id)) {
-				
-				if(members.get(i).getGender()=='M') {
-					calories = (members.get(i).getWeight()*10)+(members.get(i).getHeight()*6.25)-(members.get(i).getAge()*5)+5;
-				}
-				else {
-					calories = (members.get(i).getWeight()*10)+(members.get(i).getHeight()*6.25)-(members.get(i).getAge()*5)-161;
-				}		
-				
-			}
-		}
-		System.out.print("Choose activity level for member:\n1.SEDENTARY\n2.LIGHTLY_ACTIVE\n3.MODERATELY_ACTIVE\n4.VERY_ACTIVE\n5.EXTRA_ACTIVE\nChoice:");
-		int choice = sc.nextInt();
-		activityLevel activity = activityLevel.SEDENTARY;
-		switch(choice) {
-		case 1:
-			activity = activityLevel.SEDENTARY;
-			break;
-		case 2:
-			activity = activityLevel.LIGHTLY_ACTIVE;
-			break;	
-		case 3:
-			activity = activityLevel.MODERATELY_ACTIVE;
-			break;
-		case 4:
-			activity = activityLevel.VERY_ACTIVE;
-			break;
-		case 5:
-			activity = activityLevel.EXTRA_ACTIVE;
-			break;	
-			
-		}
-		
-		System.out.print("Choose goal for member:\n1.MAINTAIN\n2.LOSE\n3.GAIN\nChoice:");
-		int choice2 = sc.nextInt();
-		Goal goal = Goal.MAINTAIN;
-		switch(choice2) {
-		case 1:
-			goal = Goal.MAINTAIN;
-			break;
-		case 2:
-			goal = Goal.LOSE;
-			break;	
-		case 3:
-			goal = Goal.GAIN;
-			break;
-			
-		}
-		
-		calories = calories*activity.getFactor();
-		
-		calories = calories + goal.getCalorie();
-		
-		System.out.println("The members recommended daily calorie intake is "+calories+" calories");
-		
-	}
-}
+            int choice;
+            try {
+                choice = Integer.parseInt(sc.nextLine());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Enter a number.");
+                continue;
+            }
 
+            switch (choice) {
+                case 1:
+                    createProfile(sc);
+                    break;
+                case 2:
+                    // You can add remove logic here later
+                    System.out.println("Remove profile feature coming soon.");
+                    break;
+                case 3:
+                case 4:
+                    System.out.println("Feature under construction.");
+                    break;
+                case 5:
+                    calculateCalories(members, sc);
+                    break;
+                case 6:
+                    System.out.println("Macro calculation coming soon.");
+                    break;
+                case 7:
+                    System.out.println("Logging out...");
+                    return; // Returns to the Main Login screen
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
 
+    public void createProfile(Scanner sc) {
+        try {
+            System.out.print("Enter name: ");
+            String name = sc.nextLine();
+            
+            System.out.print("Enter age: ");
+            int age = Integer.parseInt(sc.nextLine());
+            
+            System.out.print("Gender (M/F): ");
+            char gender = sc.nextLine().toUpperCase().charAt(0);
+            
+            System.out.print("Height (cm): ");
+            int height = Integer.parseInt(sc.nextLine());
+            
+            System.out.print("Weight (kg): ");
+            double weight = Double.parseDouble(sc.nextLine());
+            
+            System.out.print("Enter a unique Member ID: ");
+            String id = sc.nextLine();
 
+            // Create the member object
+            member newMember = new member(name, age, gender, height, weight, id);
+            
+            // Add to the list
+            members.add(newMember);
+            System.out.println("Profile created successfully for " + name + "!");
+            
+        } catch (Exception e) {
+            System.out.println("Error creating profile. Please enter valid numbers for age/height/weight.");
+        }
+    }
 
-public class Project {
+    public void calculateCalories(ArrayList<person> members, Scanner sc) {
+        if (members.isEmpty()) {
+            System.out.println("No profiles found. Please create a profile first.");
+            return;
+        }
 
-	public static void main(String[] args) {
-		Scanner sc = new Scanner(System.in);
-		
-		ArrayList<person> members = new ArrayList<>();
-		
-		
-		
-		
-		
-		
-		
-		
-	}
+        System.out.print("Enter ID of member to calculate BMR for: ");
+        String id = sc.nextLine();
+        boolean found = false;
 
+        for (person p : members) {
+            // We need to cast person back to member to access getID()
+            if (p instanceof member) {
+                member m = (member) p;
+                if (m.getID().equals(id)) {
+                    found = true;
+                    double bmr;
+                    
+                    // Mifflin-St Jeor Equation
+                    if (m.getGender() == 'M') {
+                        bmr = (m.getWeight() * 10) + (m.getHeight() * 6.25) - (m.getAge() * 5) + 5;
+                    } else {
+                        bmr = (m.getWeight() * 10) + (m.getHeight() * 6.25) - (m.getAge() * 5) - 161;
+                    }
+
+                    System.out.println("\nSelect Activity Level:");
+                    System.out.println("1. Sedentary (little or no exercise)");
+                    System.out.println("2. Lightly active (light exercise 1-3 days/week)");
+                    System.out.println("3. Moderately active (moderate exercise 3-5 days/week)");
+                    System.out.println("4. Very active (hard exercise 6-7 days/week)");
+                    System.out.println("5. Extra active (very hard exercise & physical job)");
+                    System.out.print("Choice: ");
+                    
+                    int actChoice = Integer.parseInt(sc.nextLine());
+                    activityLevel activity;
+                    
+                    switch (actChoice) {
+                        case 1: activity = activityLevel.SEDENTARY; break;
+                        case 2: activity = activityLevel.LIGHTLY_ACTIVE; break;
+                        case 3: activity = activityLevel.MODERATELY_ACTIVE; break;
+                        case 4: activity = activityLevel.VERY_ACTIVE; break;
+                        case 5: activity = activityLevel.EXTRA_ACTIVE; break;
+                        default: activity = activityLevel.SEDENTARY;
+                    }
+
+                    System.out.println("\nSelect Goal:");
+                    System.out.println("1. Maintain Weight");
+                    System.out.println("2. Lose Weight");
+                    System.out.println("3. Gain Weight");
+                    System.out.print("Choice: ");
+                    
+                    int goalChoice = Integer.parseInt(sc.nextLine());
+                    Goal goal;
+                    
+                    switch (goalChoice) {
+                        case 1: goal = Goal.MAINTAIN; break;
+                        case 2: goal = Goal.LOSE; break;
+                        case 3: goal = Goal.GAIN; break;
+                        default: goal = Goal.MAINTAIN;
+                    }
+
+                    double totalCalories = (bmr * activity.getFactor()) + goal.getCalorie();
+                    System.out.println("\n------------------------------------------------");
+                    System.out.printf("BMR: %.2f\n", bmr);
+                    System.out.printf("Recommended Daily Intake: %.2f calories\n", totalCalories);
+                    System.out.println("------------------------------------------------");
+                }
+            }
+        }
+        if (!found) {
+            System.out.println("Member with ID " + id + " not found.");
+        }
+    }
 }
