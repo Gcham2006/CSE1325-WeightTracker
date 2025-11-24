@@ -135,7 +135,7 @@ public class Main {
 				System.out.println("Enter New Password:");
 				String newPassword = input.nextLine();
 				user.setPassword(newPassword);
-
+				return;
 			} else {
 				System.out.println("Would you like to try again? (yes/no)");
 				if (input.nextLine().toUpperCase().equals("YES")) {
