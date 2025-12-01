@@ -1,17 +1,17 @@
-public class User{
-    private String UserName;
+public class Profile{
+    private String ProfileName;
     private String Password;
     private String VerificationQuestion;
     private String VerificationAnswer;
 
-    public User(String UserName, String Password, String VerificationQuestion, String VerificationAnswer){
-        this.UserName = UserName;
+    public Profile(String ProfileName, String Password, String VerificationQuestion, String VerificationAnswer){
+        this.ProfileName = ProfileName;
         this.Password = Password;
         this.VerificationQuestion = VerificationQuestion;
         this.VerificationAnswer = VerificationAnswer;
     }
-    public String getUserName(){
-        return this.UserName;
+    public String getProfileName(){
+        return this.ProfileName;
     }
     public String getPassword(){
         return this.Password;
@@ -22,8 +22,8 @@ public class User{
     public String getVerificationAnswer(){
         return this.VerificationAnswer;
     }
-    public void setUserName(String UserName){
-        this.UserName = UserName;
+    public void setProfileName(String ProfileName){
+        this.ProfileName = ProfileName;
     }
     public void setPassword(String Password){
         this.Password = Password;

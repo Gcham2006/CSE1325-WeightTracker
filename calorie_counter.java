@@ -376,11 +376,17 @@ public class calorie_counter {
                     Goal goal = Goal.MAINTAIN;
                     if (goalChoice == 2) goal = Goal.LOSE;
                     else if (goalChoice == 3) goal = Goal.GAIN;
-
+                    System.out.print("Enter Protein eaten today (grams): ");
+                    Double proteinEaten = Double.parseDouble(sc.nextLine());
+                    System.out.print("Enter Carbs eaten today (grams): ");  
+                    Double carbsEaten = Double.parseDouble(sc.nextLine());
+                    System.out.print("Enter Fats eaten today (grams): ");
+                    Double fatsEaten = Double.parseDouble(sc.nextLine());
+                   
                     double totalCalories = (bmr * activity.getFactor()) + goal.getCalorie();
-                    double proteinGrams = (totalCalories * 0.30) / 4;
-                    double carbGrams = (totalCalories * 0.40) / 4;
-                    double fatGrams = (totalCalories * 0.30) / 9;
+                    double proteinGrams = ((totalCalories * 0.30) / 4) - proteinEaten>=  0 ? ((totalCalories * 0.30) / 4) : 0;
+                    double carbGrams = (totalCalories * 0.40) / 4 - carbsEaten >= 0 ? ((totalCalories * 0.40) / 4) - carbsEaten : 0;
+                    double fatGrams = (totalCalories * 0.30) / 9 - fatsEaten >= 0 ? ((totalCalories * 0.30) / 9) - fatsEaten : 0;
 
                     System.out.println("\n************************************************");
                     System.out.printf("  Total Calories: %.0f\n", totalCalories);
